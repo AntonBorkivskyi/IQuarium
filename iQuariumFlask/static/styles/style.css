@@ -1,0 +1,21 @@
+@font-face      { font-family: myDigital; src: url(digital-7.ttf); }
+a               { text-decoration:none; color:white;}
+body            { background:url(/static/water.jpg); background-size:100%; overflow-y: hidden;}
+td              { text-align:center;}
+#feed           { display:inline-block; width:49%; text-align:center;}
+#feed_list      { color:white; font-size:20pt;}
+.feed_list      { color:white; font-size:25pt;}
+#feed_time      { display:inline-block; width:49%; text-align:center; color:white; font:normal 20pt Arial;}
+.feed_time      { font:normal 50px myDigital;}  
+#feeding        { width:50%; height:150px; margin:0px auto; text-align:center; font:normal 35pt Arial;}
+.feeding_no     { color:white;}
+.feed_start     { color:white;}
+.feeding_yes    { color:green;}
+#freq           { font:normal 50px myDigital; color:white;}
+#freq_text      { color:white; font:normal 20pt Arial;}
+#heat           { font:bold 45pt Arial;}
+.heat_no        { color:white;}
+.heat_yes       { color:red;}
+#logo           { margin:0px auto; color:white; font:bold 40pt Century Schoolbook; text-align:center;}
+#span_for_freq  { color:white; font:normal 40px myDigital; text-align:center;}
+#temp           { color:white; font:normal 130px myDigital; text-align:center;}

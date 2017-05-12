@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<title>iQuarium</title>
+</head>
+<body>
+    <script>
+    $(document).ready(function(){
+        main_template()
+        
+        
+        
+        setInterval(time,500)
+        setInterval(temperature,1000)
+        setInterval(heat,1000)
+        setInterval(get_feeds,1000)
+    })
+    
+    function main_template(){
+        var wi = $(window).width()
+        
+        $('#main').html('<br>\
+        <table width=\'100%\' border=\'0\' cellspacing=\'10\' cellpadding=\'10\'>\
+        <tr>\
+        <td width=\''+(wi/3-50)+'\'><div id=\'freq_text\'>Frequency of feeding<br><span id=\'freq\'></span></div></td> <td width=\''+(wi/3-50)+'\'><div id=\'feed_time\'>Time to feed<br><span class=\'feed_time\'></span></div></td><td><div><input type=\'submit\' id=\'set_freq\' value=\'Set new frequency\'><br><br><input type=\'submit\' id=\'set_norm_temp\' value=\'Set new normal temperature\'></div></td>\
+        </tr>\
+        <tr>\
+        <td><div class=\'feed_list\'><b>List of last feeds</b><span id=\'feed_list\'></span></div></td><td><span id=\'temp\'></span></td><td><div id=\'heat\'>Heat</div></td>\
+        </tr>\
+        </table>')
+        get_frequency()
+        set_frequency()
+        set_norm_temp()
+    }
+    
+    function time(){
+        $.ajax({
+            url: '/time',
+            type: 'POST',
+            success: function(response){
+                $('.feed_time').text(response);
+            }
+            
+        })
+    }
+    
+    function temperature(){
+        $.ajax({
+            url: '/temperature',
+            type: 'POST',
+            success: function(response){
+                $('#temp').text(response+'°C');
+            }
+        })
+    }
+    
+    function heat(){
+        $.ajax({
+            url: '/heat',
+            type: 'POST',
+            success: function(response){
+                if(response == 'True')
+                    $('#heat').removeClass('heat_no').addClass('heat_yes');
+                else{
+                    $('#heat').removeClass('heat_yes').addClass('heat_no');
+                }
+            }
+        })
+    }
+    
+    function get_frequency(){
+        $.ajax({
+            url: '/freq',
+            type: 'POST',
+            success: function(response){
+                $('#freq').text(response)
+            }
+        })
+    }
+    
+    function set_frequency(){
+        $('#set_freq').click(function(){
+            window.location.replace('http://localhost:8000/new_freq_page')
+        })
+        
+    }
+    
+    function set_norm_temp(){
+        $('#set_norm_temp').click(function(){
+            window.location.replace('http://localhost:8000/new_temp_page')
+        })
+        
+    }
+    
+    function get_feeds(){
+        
+            $.ajax({
+                url: '/feeds',
+                type: 'POST',
+                
+                
+                success: function(response){
+                    $('#feed_list').html(response)
+                }
+            })
+        
+    }
+    </script>
+    <div id='logo'><a href='/'>iQuarium</a></div>
+    <div id='main'>
+        
+    </div>
+</body>
+</html>

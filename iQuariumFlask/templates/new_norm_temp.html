@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<title>iQuarium</title>
+</head>
+<body>
+    <script>
+    $(document).ready(function(){
+        new_norm_temp()
+        convert_to_houres()
+        
+        
+        
+    })
+    
+    
+    function new_norm_temp(){
+        $('#subm').click(function(){
+        
+            new_temp = $('#input').val() //value I want to send
+            
+            
+            $.ajax({
+                url: '/set_norm_temp',
+                type: 'POST',
+                data: new_temp,
+                
+                success: function(response){
+                    window.location.replace('http://localhost:8000')
+                }
+            })
+        })
+    }
+    
+    function convert_to_houres(){
+        $('#input').keyup(function(){   
+            var digit_time
+            var time = $(this).val()
+            var isnum = /^\d+$/.test(time);
+            if(!isnum){
+                digit_time = 0
+            }else{
+                digit_time = Math.abs(parseInt(time))
+            }
+            
+            var houres = Math.floor(digit_time/3600)
+            var minutes = Math.floor((digit_time-houres*3600)/60)
+            var seconds = (digit_time-houres*3600-minutes*60)
+            if(houres < 10){
+                houres = '0'+String(houres)
+            }
+            if(minutes < 10){
+                minutes = '0'+String(minutes)
+            }
+            if(seconds < 10){
+                seconds = '0'+String(seconds)
+            }
+            $('#span_for_freq').text(houres+':'+minutes+':'+seconds)
+        })
+    }
+    </script>
+    <div id='logo'><a href='/'>iQuarium</a></div>
+        <div id='main'>
+            <div align='center'><br><br>
+            <font size='18' color='white' font-family='Arial'>Set new normal temperature</font><br>
+            <input type='text' id='input' name='new_norm_temp'>
+            <span style='color:white;'>°C</span><br><br>
+            <input id = 'subm' type='submit' value='Set'>
+        </div>
+    </div>
+</body>
+</html>
